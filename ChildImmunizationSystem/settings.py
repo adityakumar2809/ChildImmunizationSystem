@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'beneficiary',
     'medical',
     'location',
+    'data',
 ]
 
 MIDDLEWARE = [

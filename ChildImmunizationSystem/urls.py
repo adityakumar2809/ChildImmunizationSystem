@@ -22,4 +22,5 @@ urlpatterns = [
     path('beneficiary/', include('beneficiary.urls')),
     path('medical/', include('medical.urls')),
     path('location/', include('location.urls')),
+    path('data/', include('data.urls')),
 ]
