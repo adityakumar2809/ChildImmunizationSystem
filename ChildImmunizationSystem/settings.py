@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'account',
     'beneficiary',
     'medical',
+    'location',
 ]
 
 MIDDLEWARE = [
