@@ -9,6 +9,9 @@ class MedicalAgency(models.Model):
     def __str__(self):
         return f'{self.name}'
 
+    class Meta():
+        verbose_name_plural = 'Medical Agencies'
+
 
 class MedicalHelper(models.Model):
     user = models.ForeignKey('account.User', related_name='medical_helpers', on_delete=models.CASCADE)
@@ -16,5 +19,8 @@ class MedicalHelper(models.Model):
 
     def __str__(self):
         return f'{self.medical_agency} -- {self.user.first_name} -- {self.user.last_name}'
+
+    class Meta():
+        verbose_name_plural = 'Medical Helpers'
 
      

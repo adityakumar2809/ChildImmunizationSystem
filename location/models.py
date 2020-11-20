@@ -25,3 +25,6 @@ class Locality(models.Model):
 
     def __str__(self):
         return f'{self.district} -- {self.name}'
+
+    class Meta():
+        verbose_name_plural = 'Localities'
