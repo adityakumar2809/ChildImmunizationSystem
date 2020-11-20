@@ -79,8 +79,18 @@ def create_parent(request):
 
 @login_required
 def list_children(request, pk):
-    if(request.user.pk == pk):
+    if (request.user.pk == pk):
         children_list = models.Parent.objects.get(user__exact=pk).children.all()
         return render(request, 'beneficiary/list-children.html', {'children_list':children_list})
+    else:
+        return redirect('fault', msg='ACCESS DENIED!')
+
+
+@login_required
+def detail_children(request, pk):
+    child = models.Child.objects.get(pk__exact=pk)
+    if request.user.pk == child.parent.user.pk:
+        vaccination_status_list = child.child_vaccines.all()
+        return render(request, 'beneficiary/detail-children.html', {'vaccination_status_list':vaccination_status_list})
     else:
         return redirect('fault', msg='ACCESS DENIED!')

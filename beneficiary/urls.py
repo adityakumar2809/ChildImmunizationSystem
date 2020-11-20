@@ -8,4 +8,5 @@ urlpatterns = [
     path('signup-parent/', views.signup_parent, name='signup_parent'),
     path('create-parent/', views.create_parent, name='create_parent'),
     path('list-children/<int:pk>/', views.list_children, name='list_children'),
+    path('detail-children/<int:pk>/', views.detail_children, name='detail_children'),
 ]

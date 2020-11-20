@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_title %}
+    Vaccination Status List | Child Immunization System
+{% endblock page_title %}
+
+{% block content %}
+    <h1>Vaccination Status List</h1>
+    {% for child_vcc in vaccination_status_list %}
+        <p>{{ child_vcc.vaccine }} -- {{ child_vcc.scheduled_date }} -- {{ child_vcc.is_vaccinated }}</p>
+    {% endfor %}
+{% endblock content %}

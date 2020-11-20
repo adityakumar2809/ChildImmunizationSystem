@@ -8,6 +8,6 @@
 {% block content %}
     <h1>Children List</h1>
     {% for child in children_list %}
-        <p>{{ child.first_name }} {{ child.last_name }}</p>
+        <a href="{% url 'beneficiary:detail_children' pk=child.pk %}">{{ child.first_name }} {{ child.last_name }}</a>
     {% endfor %}
 {% endblock content %}
