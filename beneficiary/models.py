@@ -24,3 +24,16 @@ class Child(models.Model):
 
     class Meta():
         verbose_name_plural = 'Children'
+
+
+class ChildVaccine(models.Model):
+    child = models.ForeignKey('beneficiary.Child', related_name='child_vaccines', on_delete=models.CASCADE)
+    vaccine = models.ForeignKey('data.Vaccine', related_name='child_vaccines', on_delete=models.CASCADE)
+    scheduled_date = models.DateField()
+    is_vaccinated = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'{self.child} -- {self.vaccine}'
+
+    class Meta():
+        verbose_name_plural = 'Child Vaccines'
