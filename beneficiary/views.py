@@ -79,5 +79,8 @@ def create_parent(request):
 
 @login_required
 def list_children(request, pk):
-    children_list = models.Parent.objects.get(user__exact=pk).children.all()
-    return render(request, 'beneficiary/list-children.html', {'children_list':children_list})
+    if(request.user.pk == pk):
+        children_list = models.Parent.objects.get(user__exact=pk).children.all()
+        return render(request, 'beneficiary/list-children.html', {'children_list':children_list})
+    else:
+        return redirect('fault', msg='ACCESS DENIED!')
