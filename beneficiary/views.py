@@ -94,3 +94,14 @@ def detail_children(request, pk):
         return render(request, 'beneficiary/detail-children.html', {'vaccination_status_list':vaccination_status_list})
     else:
         return redirect('fault', msg='ACCESS DENIED!')
+
+
+@login_required
+def detail_medical(request, pk):
+    if request.user.pk == pk:
+        parent = models.Parent.objects.get(user__exact=pk)
+        medical_helper = med_models.MedicalHelper.objects.get(pk__exact=parent.medical_helper.pk)
+        medical_agency = med_models.MedicalAgency.objects.get(pk__exact=medical_helper.medical_agency.pk)
+        return render(request, 'beneficiary/detail-medical.html', {'medical_agency':medical_agency, 'medical_helper':medical_helper})
+    else:
+        return redirect('fault', msg='ACCESS DENIED!')

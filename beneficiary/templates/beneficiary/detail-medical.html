@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_title %}
+    Medical Details | Child Immunization System
+{% endblock page_title %}
+
+{% block content %}
+    <h1>Medical Details</h1>
+    <h4>Medical Agency</h4>
+    <p>{{ medical_agency.name }}</p>
+    <h4>Medical Helper</h4>
+    <p>{{ medical_helper.user.first_name }} {{ medical_helper.user.last_name }}</p>
+{% endblock content %}

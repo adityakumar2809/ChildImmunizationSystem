@@ -19,6 +19,7 @@
             <h3>HELLO, {{ user.first_name|upper }}</h3>
             {% if user.pk in parent_users %}
                 <a href="{% url 'beneficiary:list_children' pk=user.pk %}">My Children</a>
+                <a href="{% url 'beneficiary:detail_medical' pk=user.pk %}">Get Medical Help</a>
             {% endif %}
             <a href="{% url 'account:logout' %}">Logout</a>
         {% else %}
