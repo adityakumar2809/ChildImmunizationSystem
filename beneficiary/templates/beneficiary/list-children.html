@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_title %}
+    Children List | Child Immunization System
+{% endblock page_title %}
+
+{% block content %}
+    <h1>Children List</h1>
+    {% for child in children_list %}
+        <p>{{ child.first_name }} {{ child.last_name }}</p>
+    {% endfor %}
+{% endblock content %}

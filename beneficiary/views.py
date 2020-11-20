@@ -75,3 +75,9 @@ def create_parent(request):
     else:
         form = forms.ParentCreationForm(user=request.user)
         return render(request, 'beneficiary/create-parent.html', {'form': form})
+
+
+@login_required
+def list_children(request, pk):
+    children_list = models.Parent.objects.get(user__exact=pk).children.all()
+    return render(request, 'beneficiary/list-children.html', {'children_list':children_list})

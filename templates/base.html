@@ -16,7 +16,10 @@
     <body>
 
         {% if user.is_authenticated %}
-            <h3>HELLO, {{ user.username|upper }}</h3>
+            <h3>HELLO, {{ user.first_name|upper }}</h3>
+            {% if user.pk in parent_users %}
+                <a href="{% url 'beneficiary:list_children' pk=user.pk %}">My Children</a>
+            {% endif %}
             <a href="{% url 'account:logout' %}">Logout</a>
         {% else %}
             <a href="{% url 'account:login' %}">Login</a>
