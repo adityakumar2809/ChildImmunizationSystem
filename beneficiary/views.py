@@ -5,8 +5,9 @@ from django.contrib.auth import models as auth_models
 from account import forms as acc_forms
 from medical import models as med_models
 from location import models as loc_models
+from data import models as data_models
 
-import random, string
+import random, string, datetime
 
 from . import models, forms
 
@@ -60,6 +61,11 @@ def create_parent(request):
             if user is not None:
                 parent = models.Parent.objects.create(user=user, medical_helper=med_models.MedicalHelper.objects.get(pk__exact=helper), locality=loc_models.Locality.objects.get(pk__exact=locality))
                 child = models.Child.objects.create(parent=parent, first_name=child_first_name, last_name=child_last_name, dob=child_dob)
+
+                vaccine_list = data_models.Vaccine.objects.all()
+                for vcc in vaccine_list:
+                    models.ChildVaccine.objects.create(child=child, vaccine=vcc, scheduled_date=child_dob + datetime.timedelta(days=vcc.days_offset))
+
                 return redirect('home')
             else:
                 return redirect('fault', fault='Invalid Request')
