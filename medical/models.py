@@ -1,9 +1,10 @@
 from django.db import models
+from django.contrib import auth
 
 # Create your models here.
 
 class StateMedicalOfficer(models.Model):
-    user = models.ForeignKey('account.User', related_name='state_medical_officers', on_delete=models.CASCADE)
+    user = models.ForeignKey(auth.models.User, related_name='state_medical_officers', on_delete=models.CASCADE)
     state = models.ForeignKey('location.State', related_name='state_medical_officers', on_delete=models.CASCADE)
     
     def __str__(self):
@@ -14,7 +15,7 @@ class StateMedicalOfficer(models.Model):
 
 
 class DistrictMedicalOfficer(models.Model):
-    user = models.ForeignKey('account.User', related_name='district_medical_officers', on_delete=models.CASCADE)
+    user = models.ForeignKey(auth.models.User, related_name='district_medical_officers', on_delete=models.CASCADE)
     district = models.ForeignKey('location.District', related_name='district_medical_officers', on_delete=models.CASCADE)
     
     def __str__(self):
@@ -25,7 +26,7 @@ class DistrictMedicalOfficer(models.Model):
 
 
 class MedicalAgency(models.Model):
-    user = models.ForeignKey('account.User', related_name='medical_agencies', on_delete=models.CASCADE)
+    user = models.ForeignKey(auth.models.User, related_name='medical_agencies', on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     
     def __str__(self):
@@ -36,7 +37,7 @@ class MedicalAgency(models.Model):
 
 
 class MedicalHelper(models.Model):
-    user = models.ForeignKey('account.User', related_name='medical_helpers', on_delete=models.CASCADE)
+    user = models.ForeignKey(auth.models.User, related_name='medical_helpers', on_delete=models.CASCADE)
     medical_agency = models.ForeignKey('medical.MedicalAgency', related_name='medical_helpers', on_delete=models.CASCADE)
 
     def __str__(self):

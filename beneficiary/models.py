@@ -1,10 +1,11 @@
 from django.db import models
+from django.contrib import auth
 
 # Create your models here.
 
 
 class Parent(models.Model):
-    user = models.ForeignKey('account.User', related_name='parents', on_delete=models.CASCADE)
+    user = models.ForeignKey(auth.models.User, related_name='parents', on_delete=models.CASCADE)
     medical_helper = models.ForeignKey('medical.MedicalHelper', related_name='parents', on_delete=models.CASCADE)
     locality = models.ForeignKey('location.Locality', related_name='parents', on_delete=models.CASCADE)
 
