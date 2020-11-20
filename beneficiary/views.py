@@ -1,7 +1,12 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import models as auth_models
 from account import forms as acc_forms
+from medical import models as med_models
+from location import models as loc_models
+
+import random, string
 
 from . import models, forms
 
@@ -36,7 +41,29 @@ def create_parent(request):
     if request.method == 'POST':
         form = forms.ParentCreationForm(data=request.POST, user=request.user)
         if form.is_valid():
-            print(form)
+            parent_first_name = form.cleaned_data['parent_first_name']
+            parent_last_name = form.cleaned_data['parent_last_name']
+            parent_email = form.cleaned_data['parent_email']
+            locality = form.cleaned_data['locality']
+            helper = form.cleaned_data['helper']
+            child_first_name = form.cleaned_data['child_first_name']
+            child_last_name = form.cleaned_data['child_last_name']
+            child_dob = form.cleaned_data['child_dob']
+
+            username = f'par-{parent_first_name.lower()}-{random.randint(111111,999999)}'
+            password = ''.join((random.choice(string.ascii_letters + string.digits) for i in range(8)))
+            user = auth_models.User.objects.create_user(username=username, password=password)
+            user.first_name = parent_first_name
+            user.last_name = parent_last_name
+            user.email = parent_email
+            user.save()
+            if user is not None:
+                parent = models.Parent.objects.create(user=user, medical_helper=med_models.MedicalHelper.objects.get(pk__exact=helper), locality=loc_models.Locality.objects.get(pk__exact=locality))
+                child = models.Child.objects.create(parent=parent, first_name=child_first_name, last_name=child_last_name, dob=child_dob)
+                return redirect('home')
+            else:
+                return redirect('fault', fault='Invalid Request')
+
         else:
             return redirect('fault', msg='Error Occurred')
     else:
