@@ -41,7 +41,7 @@ class MedicalHelper(models.Model):
     medical_agency = models.ForeignKey('medical.MedicalAgency', related_name='medical_helpers', on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.medical_agency} -- {self.user.first_name} -- {self.user.last_name}'
+        return f'{self.medical_agency} -- {self.user.first_name} {self.user.last_name}'
 
     class Meta():
         verbose_name_plural = 'Medical Helpers'

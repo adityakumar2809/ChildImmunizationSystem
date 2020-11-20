@@ -17,6 +17,7 @@ class Child(models.Model):
     parent = models.ForeignKey('beneficiary.Parent', related_name='children', on_delete=models.CASCADE)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
+    dob = models.DateField(blank=True, null=True)
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'

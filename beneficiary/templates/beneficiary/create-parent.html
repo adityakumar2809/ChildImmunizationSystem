@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_title %}
+    Parent Creation | Child Immunization System
+{% endblock page_title %}
+
+{% block content %}
+    <h1>Parent Creation</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Create</button>
+    </form>
+{% endblock content %}
