@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_title %}
+    Children List | Child Immunization System
+{% endblock page_title %}
+
+{% block content %}
+    <h1>Get Children List</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Get Details</button>
+    </form>
+    <br><br>
+    {% for child in children_list %}
+        <a href="{% url 'medical:detail_children_medical_helper' pk=child.pk %}">{{ child.first_name }} {{ child.last_name }}</a>
+    {% endfor %}
+{% endblock content %}

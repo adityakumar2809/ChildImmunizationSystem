@@ -52,3 +52,36 @@ def toggle_child_vaccination_status(request, pk):
         return render(request, 'medical/detail-children.html', {'vaccination_status_list':vaccination_status_list})
     else:
         return redirect('fault', msg='ACCESS DENIED!')
+
+@login_required
+def list_children_medical_helper(request):
+    if request.method == 'POST':
+        form = forms.GetParentUsernameForm(data=request.POST)
+        if form.is_valid():
+            parent_username = form.cleaned_data['parent_username']
+
+            try:
+                parent = ben_models.Parent.objects.get(user__username__exact=parent_username)
+            except:
+                return redirect('fault', msg='Invalid Username entered')
+            if parent.medical_helper.user.pk == request.user.pk:
+                children_list = parent.children.all()
+                form = forms.GetParentUsernameForm()
+                return render(request, 'medical/list-children-medical-helper.html', {'children_list':children_list, 'form': form}) 
+            else:
+                return redirect('fault', msg='The given parent does not reside in your area of operation')
+        else:
+            return redirect('fault', msg='Invalid Request')
+    else:
+        form = forms.GetParentUsernameForm()
+        return render(request, 'medical/list-children-medical-helper.html', {'form':form})
+
+
+@login_required
+def detail_children_medical_helper(request, pk):
+    child = ben_models.Child.objects.get(pk__exact=pk)
+    if child.parent.medical_helper.user.pk == request.user.pk:
+        vaccination_status_list = child.child_vaccines.all()
+        return render(request, 'medical/detail-children-medical-helper.html', {'vaccination_status_list':vaccination_status_list})
+    else:
+        return redirect('fault', msg='ACCESS DENIED!')
