@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from beneficiary import models as ben_models
 
 from . import models, forms
+
+import datetime, json
 # Create your views here.
 
 @login_required
@@ -85,3 +87,31 @@ def detail_children_medical_helper(request, pk):
         return render(request, 'medical/detail-children-medical-helper.html', {'vaccination_status_list':vaccination_status_list})
     else:
         return redirect('fault', msg='ACCESS DENIED!')
+
+
+@login_required
+def medical_agency_analysis_locality_wise(request):
+    medical_agency = models.MedicalAgency.objects.get(user__pk__exact=request.user.pk)
+    locality_list = medical_agency.localities.all()
+    locality_wise_vaccination_status = []
+    label = []
+    value = []
+    for locality in locality_list:
+        vaccination_done_count = vaccination_missed_count = 0
+        parents = locality.parents.all()
+        for parent in parents:
+            children = parent.children.all()
+            for child in children:
+                vaccination_done_count += ben_models.ChildVaccine.objects.all().filter(child__exact=child, scheduled_date__lte=datetime.date.today(), is_vaccinated__exact=True).count()
+                vaccination_missed_count += ben_models.ChildVaccine.objects.all().filter(child__exact=child, scheduled_date__lte=datetime.date.today(), is_vaccinated__exact=False).count()
+        if (vaccination_done_count + vaccination_missed_count) > 0:
+            vaccinated_percentage = vaccination_done_count/(vaccination_done_count + vaccination_missed_count)
+        else:
+            vaccinated_percentage = 0
+        label.append(locality.name)
+        value.append(vaccinated_percentage)
+        locality_wise_vaccination_status.append({'locality':locality.name, 'vaccination_done_count':vaccination_done_count, 'vaccination_missed_count':vaccination_missed_count, 'vaccinated_percentage':vaccinated_percentage})
+    data = { "label": label, "value": value}
+    jsondata = json.dumps(data)
+    return render(request, 'medical/medical-agency-analysis-locality-wise.html', {'locality_wise_vaccination_status':locality_wise_vaccination_status, 'jsondata':jsondata})
+        
