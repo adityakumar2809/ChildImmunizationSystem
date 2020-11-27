@@ -102,7 +102,7 @@ def add_child_to_parent(request):
         else:
             return redirect('fault', msg='Invalid Request')
     else:
-        form = forms.ChildAdditionForm(data=request.POST)
+        form = forms.ChildAdditionForm()
         return render(request, 'beneficiary/add-child-to-parent.html', {'form':form})
 
 
