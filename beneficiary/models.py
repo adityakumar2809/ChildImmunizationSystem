@@ -37,3 +37,12 @@ class ChildVaccine(models.Model):
 
     class Meta():
         verbose_name_plural = 'Child Vaccines'
+
+
+class Notification(models.Model):
+    child_vaccine = models.ForeignKey('beneficiary.ChildVaccine', related_name='notifications', on_delete=models.CASCADE)
+    scheduled_date = models.DateField()
+    is_sent = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'{self.child_vaccine} -- {self.scheduled_date}'

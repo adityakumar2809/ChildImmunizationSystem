@@ -7,3 +7,4 @@ from . import models
 admin.site.register(models.Parent)
 admin.site.register(models.Child)
 admin.site.register(models.ChildVaccine)
+admin.site.register(models.Notification)
