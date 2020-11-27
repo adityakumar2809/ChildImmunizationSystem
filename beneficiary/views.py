@@ -63,7 +63,7 @@ def create_parent(request):
                 child = models.Child.objects.create(parent=parent, first_name=child_first_name, last_name=child_last_name, dob=child_dob)
 
                 vaccine_list = data_models.Vaccine.objects.all()
-                notification_days_offset = [1,3,7]
+                notification_days_offset = [7,3,1]
                 for vcc in vaccine_list:
                     child_vaccine = models.ChildVaccine.objects.create(child=child, vaccine=vcc, scheduled_date=child_dob + datetime.timedelta(days=vcc.days_offset))
                     for ntf_days_offset in notification_days_offset:
@@ -97,7 +97,7 @@ def add_child_to_parent(request):
             if parent.locality.medical_agency.user.pk == request.user.pk:
                 child = models.Child.objects.create(parent=parent, first_name=child_first_name, last_name=child_last_name, dob=child_dob)
                 vaccine_list = data_models.Vaccine.objects.all()
-                notification_days_offset = [1,3,7]
+                notification_days_offset = [7,3,1]
                 for vcc in vaccine_list:
                     child_vaccine = models.ChildVaccine.objects.create(child=child, vaccine=vcc, scheduled_date=child_dob + datetime.timedelta(days=vcc.days_offset))
                     for ntf_days_offset in notification_days_offset:
