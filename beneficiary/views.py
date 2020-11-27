@@ -20,14 +20,14 @@ def signup_parent(request):
             try:
                 form.save()
             except:
-                return redirect('fault', fault='Username/Email already exists!')
+                return redirect('fault', msg='Username/Email already exists!')
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
             else:
-                return redirect('fault', fault='Invalid Request')
+                return redirect('fault', msg='Invalid Request')
 
             return redirect('home')
         else:
@@ -68,13 +68,42 @@ def create_parent(request):
 
                 return redirect('home')
             else:
-                return redirect('fault', fault='Invalid Request')
+                return redirect('fault', msg='Invalid Request')
 
         else:
             return redirect('fault', msg='Error Occurred')
     else:
         form = forms.ParentCreationForm(user=request.user)
         return render(request, 'beneficiary/create-parent.html', {'form': form})
+
+
+@login_required
+def add_child_to_parent(request):
+    if request.method == 'POST':
+        form = forms.ChildAdditionForm(data=request.POST)
+        if form.is_valid():
+            parent_username = form.cleaned_data['parent_username']
+            child_first_name = form.cleaned_data['child_first_name']
+            child_last_name = form.cleaned_data['child_last_name']
+            child_dob = form.cleaned_data['child_dob']
+
+            try:
+                parent = models.Parent.objects.get(user__username__exact=parent_username)
+            except:
+                return redirect('fault', msg='Invalid Username entered')
+            if parent.locality.medical_agency.user.pk == request.user.pk:
+                child = models.Child.objects.create(parent=parent, first_name=child_first_name, last_name=child_last_name, dob=child_dob)
+                vaccine_list = data_models.Vaccine.objects.all()
+                for vcc in vaccine_list:
+                    models.ChildVaccine.objects.create(child=child, vaccine=vcc, scheduled_date=child_dob + datetime.timedelta(days=vcc.days_offset))
+                return redirect('home')
+            else:
+                return redirect('fault', msg='The given parent does not reside in your area of operation')
+        else:
+            return redirect('fault', msg='Invalid Request')
+    else:
+        form = forms.ChildAdditionForm(data=request.POST)
+        return render(request, 'beneficiary/add-child-to-parent.html', {'form':form})
 
 
 @login_required

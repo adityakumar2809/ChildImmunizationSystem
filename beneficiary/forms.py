@@ -28,3 +28,10 @@ class ParentCreationForm(forms.Form):
 
         self.fields['locality'] = forms.ChoiceField(choices=LOCALITY_CHOICES)
         self.fields['helper'] = forms.ChoiceField(choices=HELPER_CHOICES)
+
+
+class ChildAdditionForm(forms.Form):
+    parent_username = forms.CharField()
+    child_first_name = forms.CharField()
+    child_last_name = forms.CharField()
+    child_dob = forms.DateField()
