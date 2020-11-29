@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_title %}
+    Vaccination Status Analysis | Child Immunization System
+{% endblock page_title %}
+
+{% block content %}
+    <script>
+        var jsonobject = JSON.parse('{{ jsondata | escapejs }}');
+    </script>
+    {% include "medical/_charts.html" %}
+    <h1>Vaccination Status Analysis</h1>
+    {% for locality_status in locality_wise_vaccination_status %}
+        <p><a href="{% url 'medical:district_medical_officer_analysis_parent_wise' pk=locality_status.locality_pk %}">{{ locality_status.locality_name }}</a> -- {{ locality_status.vaccination_done_count }} -- {{ locality_status.vaccination_missed_count }} -- {{ locality_status.vaccinated_percentage }}</p>
+    {% endfor %}
+{% endblock content %}

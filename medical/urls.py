@@ -14,4 +14,6 @@ urlpatterns = [
     path('medical-agency-analysis-parent-wise/<int:pk>/', views.medical_agency_analysis_parent_wise, name='medical_agency_analysis_parent_wise'),
     path('district-medical-officer-analysis-locality-wise/', views.district_medical_officer_analysis_locality_wise, name='district_medical_officer_analysis_locality_wise'),   
     path('district-medical-officer-analysis-parent-wise/<int:pk>/', views.district_medical_officer_analysis_parent_wise, name='district_medical_officer_analysis_parent_wise'),
+    path('state-medical-officer-analysis-district-wise/', views.state_medical_officer_analysis_district_wise, name='state_medical_officer_analysis_district_wise'),
+    path('state-medical-officer-analysis-locality-wise/<int:pk>/', views.state_medical_officer_analysis_locality_wise, name='state_medical_officer_analysis_locality_wise'),
 ]
