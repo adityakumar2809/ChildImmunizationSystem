@@ -19,4 +19,5 @@ urlpatterns = [
     path('state-medical-officer-analysis-parent-wise/<int:pk>/', views.state_medical_officer_analysis_parent_wise, name='state_medical_officer_analysis_parent_wise'),
     path('add-healthcare-policy/', views.add_healthcare_policy, name='add_healthcare_policy'),
     path('list-healthcare-policy/', views.list_healthcare_policy, name='list_healthcare_policy'),
+    path('detail-healthcare-policy/<int:pk>/', views.detail_healthcare_policy, name='detail_healthcare_policy'),
 ]

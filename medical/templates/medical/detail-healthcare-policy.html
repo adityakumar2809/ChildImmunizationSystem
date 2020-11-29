@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_title %}
+    {{ healthcare_policy.title }} | Child Immunization System
+{% endblock page_title %}
+
+{% block content %}
+    <h1>{{ healthcare_policy.title }}</h1>
+    <p>{{ healthcare_policy.description }}</p>
+    <p>{{ healthcare_policy.eligibility }}</p>
+    <p>{{ healthcare_policy.process }}</p>
+{% endblock content %}

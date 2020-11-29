@@ -306,3 +306,8 @@ def list_healthcare_policy(request):
     else:
         form = forms.GetStateForm()
         return render(request, 'medical/list-healthcare-policy.html', {'form' : form})
+
+
+def detail_healthcare_policy(request, pk):
+    healthcare_policy = models.HealthcarePolicy.objects.get(pk__exact=pk)
+    return render(request, 'medical/detail-healthcare-policy.html', {'healthcare_policy':healthcare_policy})
