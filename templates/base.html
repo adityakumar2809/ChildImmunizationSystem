@@ -16,15 +16,32 @@
     <body>
 
         {% if user.is_authenticated %}
-            <h3>HELLO, {{ user.first_name|upper }}</h3>
+            <h3>HELLO, {{ user.first_name|upper }} {{ user.last_name|upper }}</h3>
             {% if user.pk in parent_users %}
                 <a href="{% url 'beneficiary:list_children' pk=user.pk %}">My Children</a>
                 <a href="{% url 'beneficiary:detail_medical' pk=user.pk %}">Get Medical Help</a>
+            {% endif %}
+            {% if user.pk in medical_agency_users %}
+                <a href="{% url 'beneficiary:create_parent' %}">Register a new Parent</a>
+                <a href="{% url 'beneficiary:add_child_to_parent' %}">Register new child to existing parent</a>
+                <a href="{% url 'medical:list_children' %}">View Parent Details</a>
+                <a href="{% url 'medical:medical_agency_analysis_locality_wise' %}">Locality Wise Analysis</a>
+            {% endif %}
+            {% if user.pk in medical_helper_users %}
+                <a href="{% url 'medical:list_children_medical_helper' %}">View Parent Details</a>
+            {% endif %}
+            {% if user.pk in district_medical_officer_users %}
+                <a href="{% url 'medical:district_medical_officer_analysis_locality_wise' %}">Locality Wise Analysis</a>
+            {% endif %}
+            {% if user.pk in state_medical_officer_users %}
+                <a href="{% url 'medical:state_medical_officer_analysis_district_wise' %}">District Wise Analysis</a>
+                <a href="{% url 'medical:add_healthcare_policy' %}">Add Healthcare Policy</a>
             {% endif %}
             <a href="{% url 'account:logout' %}">Logout</a>
         {% else %}
             <a href="{% url 'account:login' %}">Login</a>
         {% endif %}
+        <a href="{% url 'medical:list_healthcare_policy' %}">Healthcare Policies</a>
 
         {% block content %}
         {% endblock content %}
