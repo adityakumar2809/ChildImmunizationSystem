@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_title %}
+    Healthcare Policy List | Child Immunization System
+{% endblock page_title %}
+
+{% block content %}
+    <h1>Get Healthcare Policy List</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Get Details</button>
+    </form>
+    <br><br>
+    {% for healthcare_policy in healthcare_policy_list %}
+        <a href="{% url 'medical:detail_children' pk=healthcare_policy.pk %}">{{ healthcare_policy.title }} -- {{ healthcare_policy.description|truncatechars:30 }}</a>
+    {% endfor %}
+{% endblock content %}

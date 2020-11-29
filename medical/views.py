@@ -291,3 +291,18 @@ def add_healthcare_policy(request):
     else:
         form = forms.AddHealthcarePolicyForm()
         return render(request, 'medical/add-healthcare-policy.html', {'form' : form})
+
+
+def list_healthcare_policy(request):
+    if request.method == 'POST':
+        form = forms.GetStateForm(request.POST)
+        if form.is_valid():
+            state_pk = form.cleaned_data['state']
+            healthcare_policy_list = models.HealthcarePolicy.objects.all().filter(state__pk__exact=state_pk)
+            form = forms.GetStateForm()
+            return render(request, 'medical/list-healthcare-policy.html', {'form' : form, 'healthcare_policy_list':healthcare_policy_list})
+        else:
+            return redirect('fault', msg='Invalid Request')
+    else:
+        form = forms.GetStateForm()
+        return render(request, 'medical/list-healthcare-policy.html', {'form' : form})
