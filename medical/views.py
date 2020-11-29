@@ -275,3 +275,19 @@ def state_medical_officer_analysis_parent_wise(request, pk):
     data = { "label": label, "value": value}
     jsondata = json.dumps(data)
     return render(request, 'medical/state-medical-officer-analysis-parent-wise.html', {'parent_wise_vaccination_status':parent_wise_vaccination_status, 'jsondata':jsondata})
+
+
+@login_required
+def add_healthcare_policy(request):
+    if request.method == 'POST':
+        form = forms.AddHealthcarePolicyForm(request.POST)
+        if form.is_valid():
+            healthcare_policy = form.save(commit=False)
+            healthcare_policy.state = models.StateMedicalOfficer.objects.get(user__pk__exact=request.user.pk).state
+            healthcare_policy.save()
+            return redirect('home')
+        else:
+            return redirect('fault', msg='Invalid Request')
+    else:
+        form = forms.AddHealthcarePolicyForm()
+        return render(request, 'medical/add-healthcare-policy.html', {'form' : form})

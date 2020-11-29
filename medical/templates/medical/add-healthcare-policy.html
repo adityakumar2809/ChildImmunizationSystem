@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_title %}
+    Add Healthcare Policy | Child Immunization System
+{% endblock page_title %}
+
+{% block content %}
+    <h1>Add Healthcare Policy</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add</button>
+    </form>
+{% endblock content %}

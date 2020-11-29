@@ -46,4 +46,18 @@ class MedicalHelper(models.Model):
     class Meta():
         verbose_name_plural = 'Medical Helpers'
 
+
+class HealthcarePolicy(models.Model):
+    state = models.ForeignKey('location.State', related_name='healthcare_policies', on_delete=models.CASCADE)
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    eligibility = models.TextField()
+    process = models.TextField()
+
+    def __str__(self):
+        return f'{self.state} -- {self.title}'
+
+    class Meta():
+        verbose_name_plural = 'Healthcare Policies'
+
      
