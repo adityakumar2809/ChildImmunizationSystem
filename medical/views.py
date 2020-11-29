@@ -119,7 +119,6 @@ def medical_agency_analysis_locality_wise(request):
 
 @login_required
 def medical_agency_analysis_parent_wise(request, pk):
-    medical_agency = models.MedicalAgency.objects.get(user__pk__exact=request.user.pk)
     locality = loc_models.Locality.objects.get(pk__exact=pk)
     parents = locality.parents.all()
     parent_wise_vaccination_status = []
@@ -169,3 +168,28 @@ def district_medical_officer_analysis_locality_wise(request):
     data = { "label": label, "value": value}
     jsondata = json.dumps(data)
     return render(request, 'medical/district-medical-officer-analysis-locality-wise.html', {'locality_wise_vaccination_status':locality_wise_vaccination_status, 'jsondata':jsondata})     
+
+
+@login_required
+def district_medical_officer_analysis_parent_wise(request, pk):
+    locality = loc_models.Locality.objects.get(pk__exact=pk)
+    parents = locality.parents.all()
+    parent_wise_vaccination_status = []
+    label = []
+    value = []
+    for parent in parents:
+        vaccination_done_count = vaccination_missed_count = 0
+        children = parent.children.all()
+        for child in children:
+            vaccination_done_count += ben_models.ChildVaccine.objects.all().filter(child__exact=child, scheduled_date__lte=datetime.date.today(), is_vaccinated__exact=True).count()
+            vaccination_missed_count += ben_models.ChildVaccine.objects.all().filter(child__exact=child, scheduled_date__lte=datetime.date.today(), is_vaccinated__exact=False).count()
+        if (vaccination_done_count + vaccination_missed_count) > 0:
+            vaccinated_percentage = vaccination_done_count/(vaccination_done_count + vaccination_missed_count)
+        else:
+            vaccinated_percentage = 0
+        label.append(f'{parent.user.first_name} {parent.user.last_name}')
+        value.append(vaccinated_percentage)
+        parent_wise_vaccination_status.append({'parent_name':parent.pk, 'parent_name':f'{parent.user.first_name} {parent.user.last_name}', 'vaccination_done_count':vaccination_done_count, 'vaccination_missed_count':vaccination_missed_count, 'vaccinated_percentage':vaccinated_percentage})
+    data = { "label": label, "value": value}
+    jsondata = json.dumps(data)
+    return render(request, 'medical/district-medical-officer-analysis-parent-wise.html', {'parent_wise_vaccination_status':parent_wise_vaccination_status, 'jsondata':jsondata})
