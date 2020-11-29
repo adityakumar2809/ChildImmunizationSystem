@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import models as auth_models
+from django.core.mail import send_mail
 from account import forms as acc_forms
 from medical import models as med_models
 from location import models as loc_models
@@ -61,7 +62,7 @@ def create_parent(request):
             if user is not None:
                 parent = models.Parent.objects.create(user=user, medical_helper=med_models.MedicalHelper.objects.get(pk__exact=helper), locality=loc_models.Locality.objects.get(pk__exact=locality))
                 child = models.Child.objects.create(parent=parent, first_name=child_first_name, last_name=child_last_name, dob=child_dob)
-
+                send_mail('New Parent Registration', f'Your account is initiated on the portal. Please access it using USERNAME - {username} and PASSWORD - {password}. Thank you.', 'myowntestmail0@gmail.com', [parent_email], fail_silently = True)
                 vaccine_list = data_models.Vaccine.objects.all()
                 notification_days_offset = [7,3,1]
                 for vcc in vaccine_list:
