@@ -11,7 +11,7 @@
     </script>
     {% include "medical/_charts.html" %}
     <h1>Vaccination Status Analysis</h1>
-    {% for locality_status in locality_wise_vaccination_status %}
-        <p><a href="{% url 'medical:state_medical_officer_analysis_parent_wise' pk=locality_status.locality_pk %}">{{ locality_status.locality_name }}</a> -- {{ locality_status.vaccination_done_count }} -- {{ locality_status.vaccination_missed_count }} -- {{ locality_status.vaccinated_percentage }}</p>
+    {% for parent_status in parent_wise_vaccination_status %}
+        <p>{{ parent_status.parent_name }} -- {{ parent_status.vaccination_done_count }} -- {{ parent_status.vaccination_missed_count }} -- {{ parent_status.vaccinated_percentage }}</p>
     {% endfor %}
 {% endblock content %}
