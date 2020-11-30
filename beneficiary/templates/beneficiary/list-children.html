@@ -6,8 +6,23 @@
 {% endblock page_title %}
 
 {% block content %}
-    <h1>Children List</h1>
-    {% for child in children_list %}
-        <a href="{% url 'beneficiary:detail_children' pk=child.pk %}">{{ child.first_name }} {{ child.last_name }}</a>
-    {% endfor %}
+    <h3>Children List</h3>
+    <table class="highlight centered responsive-table">
+        <thead>
+            <tr>
+                <th>S. No.</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for child in children_list %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td><a href="{% url 'beneficiary:detail_children' pk=child.pk %}">{{ child.first_name }}</a></td>
+                    <td><a href="{% url 'beneficiary:detail_children' pk=child.pk %}">{{ child.last_name }}</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock content %}

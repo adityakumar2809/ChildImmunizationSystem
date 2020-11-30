@@ -6,8 +6,31 @@
 {% endblock page_title %}
 
 {% block content %}
-    <h1>Vaccination Status List</h1>
-    {% for child_vcc in vaccination_status_list %}
-        <p>{{ child_vcc.vaccine }} -- {{ child_vcc.scheduled_date }} -- {{ child_vcc.is_vaccinated }}</p>
-    {% endfor %}
+    <h3>Vaccination Status List</h3>
+    <table class="highlight centered responsive-table">
+        <thead>
+            <tr>
+                <th>S. No.</th>
+                <th>Vaccine</th>
+                <th>Scheduled Date</th>
+                <th>Vaccination Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for child_vcc in vaccination_status_list %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ child_vcc.vaccine }}</td>
+                    <td>{{ child_vcc.scheduled_date }}</td>
+                    <td>
+                        {% if child_vcc.is_vaccinated %}
+                            <i class="material-icons green-text">check</i>
+                        {% else %}
+                            <i class="material-icons red-text">clear</i>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock content %}
