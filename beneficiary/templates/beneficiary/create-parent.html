@@ -1,15 +1,50 @@
 {% extends "base.html" %}
 {% load static %}
+{% load widget_tweaks %}
 
 {% block page_title %}
     Parent Creation | Child Immunization System
 {% endblock page_title %}
 
 {% block content %}
-    <h1>Parent Creation</h1>
+    <h3>Parent Creation</h3>
     <form method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Create</button>
+        <div class="input-field">
+            {{ form.parent_first_name }}
+            <label for="parent_first_name">Parent's First Name</label>
+        </div>
+        <div class="input-field">
+            {{ form.parent_last_name }}
+            <label for="parent_last_name">Parent's Last Name</label>
+        </div>
+        <div class="input-field">
+            {{ form.parent_email }}
+            <label for="parent_email">Parent's Email</label>
+        </div>
+        <br>
+        <div class="input-field">
+            {{ form.locality }}
+            <label for="locality">Area of Residence</label>
+        </div>
+        <br>
+        <div class="input-field">
+            {{ form.helper }}
+            <label for="helper">Medical Helper</label>
+        </div>
+        <br>
+        <div class="input-field">
+            {{ form.child_first_name }}
+            <label for="child_first_name">Child's First Name</label>
+        </div>
+        <div class="input-field">
+            {{ form.child_last_name }}
+            <label for="child_last_name">Child's Last Name</label>
+        </div>
+        <div class="input-field">
+            {{ form.child_dob|add_class:'datepicker' }}
+            <label for="child_dob">Child's DOB</label>
+        </div>
+        <a class="waves-effect waves-light btn">Register</a>
     </form>
 {% endblock content %}

@@ -15,8 +15,8 @@ class ParentCreationForm(forms.Form):
     def __init__(self, user, *args, **kwargs):
         super(ParentCreationForm, self).__init__(*args, **kwargs)
 
-        LOCALITY_CHOICES = []
-        HELPER_CHOICES = []
+        LOCALITY_CHOICES = [(None,'---Select---')]
+        HELPER_CHOICES = [(None,'---Select---')]
 
         localities_list = med_models.MedicalAgency.objects.get(user__exact=user.pk).localities.all()
         for loc in localities_list:
