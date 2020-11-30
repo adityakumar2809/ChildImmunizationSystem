@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,12 +10,67 @@
             {% endblock page_title %}
         </title>
 
+        <!-- Compiled and minified jQuery -->
+        <!-- <script src="https://code.jquery.com/jquery-3.5.0.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script> -->
+        <script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
+
+        <!-- Materialize Compiled and minified CSS -->
+        <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
+        <link rel="stylesheet" href="{% static 'materialize/css/materialize.min.css' %}">
+
+        <!-- Materialize Icons -->
+        <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+        <link rel="stylesheet" href="{% static 'materialize/css/icon.css' %}">
+
+        <!-- Materialize Compiled and minified JavaScript -->
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
+        <script src="{% static 'materialize/js/materialize.min.js' %}"></script>
+
         {% block head %}
         {% endblock head %}
 
     </head>
-    <body>
+    <body class="green lighten-5">
 
+
+        <div class="navbar-fixed">
+            <nav>
+                <div class="nav-wrapper cyan darken-4">
+                    <a href="#!" class="left brand-logo">&nbsp;Child Immunization System</a>
+                    <ul class="right">
+                        {% if user.is_authenticated %}
+                            {% if user.pk in parent_users %}
+                                <li><a href="{% url 'beneficiary:list_children' pk=user.pk %}" class="teal-text text-lighten-5">My Children</a></li>
+                                <li><a href="{% url 'beneficiary:detail_medical' pk=user.pk %}" class="teal-text text-lighten-5">Get Medical Help</a></li>
+                            {% endif %}
+                            {% if user.pk in medical_agency_users %}
+                                <li><a href="{% url 'beneficiary:create_parent' %}" class="teal-text text-lighten-5">Register a new Parent</a></li>
+                                <li><a href="{% url 'beneficiary:add_child_to_parent' %}" class="teal-text text-lighten-5">Register new child to existing parent</a></li>
+                                <li><a href="{% url 'medical:list_children' %}" class="teal-text text-lighten-5">View Parent Details</a></li>
+                                <li><a href="{% url 'medical:medical_agency_analysis_locality_wise' %}" class="teal-text text-lighten-5">Locality Wise Analysis</a></li>
+                            {% endif %}
+                            {% if user.pk in medical_helper_users %}
+                                <li><a href="{% url 'medical:list_children_medical_helper' %}" class="teal-text text-lighten-5">View Parent Details</a></li>
+                            {% endif %}
+                            {% if user.pk in district_medical_officer_users %}
+                                <li><a href="{% url 'medical:district_medical_officer_analysis_locality_wise' %}" class="teal-text text-lighten-5">Locality Wise Analysis</a></li>
+                            {% endif %}
+                            {% if user.pk in state_medical_officer_users %}
+                                <li><a href="{% url 'medical:state_medical_officer_analysis_district_wise' %}" class="teal-text text-lighten-5">District Wise Analysis</a></li>
+                                <li><a href="{% url 'medical:add_healthcare_policy' %}" class="teal-text text-lighten-5">Add Healthcare Policy</a></li>
+                            {% endif %}
+                            <li><a href="{% url 'medical:list_healthcare_policy' %}" class="teal-text text-lighten-5">Healthcare Policies</a></li>
+                            <li style="border-left: #004d40 5px solid;"><a href="{% url 'account:logout' %}" class="teal-text text-lighten-5">Logout&nbsp;</a></li>
+                        {% else %}
+                            <li><a href="{% url 'medical:list_healthcare_policy' %}" class="teal-text text-lighten-5">Healthcare Policies</a></li>
+                            <li><a href="{% url 'account:login' %}" class="teal-text text-lighten-5">Login</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        {% comment %}
         {% if user.is_authenticated %}
             <h3>HELLO, {{ user.first_name|upper }} {{ user.last_name|upper }}</h3>
             {% if user.pk in parent_users %}
@@ -42,6 +98,7 @@
             <a href="{% url 'account:login' %}">Login</a>
         {% endif %}
         <a href="{% url 'medical:list_healthcare_policy' %}">Healthcare Policies</a>
+        {% endcomment %}
 
         {% block content %}
         {% endblock content %}
