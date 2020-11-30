@@ -1,6 +1,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
 <div class="container">
-<canvas id="myChart" width="30" height="12" style="background-color:#fff;"></canvas>
+<canvas id="myChart" width="30" height="12" style="background-color:#e8f5e9;"></canvas>
 </div>
 <script>
     var ctx = document.getElementById("myChart").getContext('2d');
@@ -77,7 +77,8 @@
                 xAxes: [{
                     stacked:true,
                     ticks: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        suggestedMax: 100
                     }
                 }]
             }
