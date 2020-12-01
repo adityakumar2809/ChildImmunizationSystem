@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
 
 from beneficiary import models as ben_models
 from location import models as loc_models
@@ -286,6 +287,13 @@ def add_healthcare_policy(request):
             healthcare_policy = form.save(commit=False)
             healthcare_policy.state = models.StateMedicalOfficer.objects.get(user__pk__exact=request.user.pk).state
             healthcare_policy.save()
+
+            beneficiary_email_list = []
+            for district in models.StateMedicalOfficer.objects.get(user__pk__exact=request.user.pk).state.districts.all():
+                for locality in district.localities.all():
+                    for parent in locality.parents.all():
+                        beneficiary_email_list.append(f'{parent.user.email}')
+            send_mail('New Healthcare Policy Launched', f'A new healthcare policy is implemented by your state government. Kindly have a look. Thank You.', 'myowntestmail0@gmail.com', beneficiary_email_list, fail_silently = True)
             return redirect('home')
         else:
             return redirect('fault', msg='Invalid Request')
