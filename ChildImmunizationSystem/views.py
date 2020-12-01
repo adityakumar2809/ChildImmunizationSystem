@@ -7,10 +7,62 @@ from medical import models as med_models
 from location import models as loc_models
 from data import models as data_models
 
-import datetime, random
+import datetime, random, json
 
 def home(request):
-    return render(request, 'home.html', {})
+    states = loc_models.State.objects.all()
+    vaccines = data_models.Vaccine.objects.all()
+    vcc_label=[]
+    vcc_value=[]
+    for vcc in vaccines:
+        vaccination_done_count = ben_models.ChildVaccine.objects.all().filter(vaccine__pk__exact=vcc.pk, scheduled_date__lt=datetime.date.today(), is_vaccinated__exact=True).count()
+        vaccination_missed_count = ben_models.ChildVaccine.objects.all().filter(vaccine__pk__exact=vcc.pk, scheduled_date__lt=datetime.date.today(), is_vaccinated__exact=False).count()
+        if (vaccination_done_count + vaccination_missed_count) > 0:
+            vaccinated_percentage = round((vaccination_done_count/(vaccination_done_count + vaccination_missed_count))*100, 2)
+        else:
+            vaccinated_percentage = 0
+        vcc_label.append(vcc.name)
+        vcc_value.append(vaccinated_percentage)
+    
+    
+    total_vaccination_done_count = total_vaccination_missed_count = 0
+    state_label=[]
+    state_value=[]
+    time_label=[]
+    time_value=[]
+    total_label=['Successful', 'Unsuccessful']
+    total_value=[]
+    for state in states:
+        vaccination_done_count = ben_models.ChildVaccine.objects.all().filter(child__parent__locality__district__state__pk__exact=state.pk, scheduled_date__lt=datetime.date.today(), is_vaccinated__exact=True).count()
+        vaccination_missed_count = ben_models.ChildVaccine.objects.all().filter(child__parent__locality__district__state__pk__exact=state.pk, scheduled_date__lt=datetime.date.today(), is_vaccinated__exact=False).count()
+        if (vaccination_done_count + vaccination_missed_count) > 0:
+            vaccinated_percentage = round((vaccination_done_count/(vaccination_done_count + vaccination_missed_count))*100, 2)
+        else:
+            vaccinated_percentage = 0
+        state_label.append(state.name)
+        state_value.append(vaccinated_percentage)
+        total_vaccination_done_count += vaccination_done_count
+        total_vaccination_missed_count += vaccination_missed_count
+    total_value.append(total_vaccination_done_count)
+    total_value.append(total_vaccination_missed_count)
+    
+    date_lower_bound = datetime.datetime(datetime.datetime.today().year, datetime.datetime.today().month, 1)
+    for _ in range(12):
+        date_upper_bound = (date_lower_bound.replace(day=1) + datetime.timedelta(days=32)).replace(day=1) 
+        scheduled_vaccines = ben_models.ChildVaccine.objects.all().filter(scheduled_date__gte=date_lower_bound, scheduled_date__lt=date_upper_bound).count()
+        time_label.append(f'{date_lower_bound.strftime("%b")}\' {date_lower_bound.strftime("%y")}')
+        time_value.append(scheduled_vaccines)
+        date_lower_bound = date_upper_bound
+    
+    data = { "vcc_label": vcc_label, "vcc_value": vcc_value, "state_label": state_label, "state_value": state_value, "time_label": time_label, "time_value": time_value, "total_label": total_label, "total_value": total_value}
+    jsondata = json.dumps(data)
+
+
+    parent_count = ben_models.Parent.objects.all().count()
+    children_count = ben_models.Child.objects.all().count()
+    medical_agency_count = med_models.MedicalAgency.objects.all().count()
+    locality_count = loc_models.Locality.objects.all().count()
+    return render(request, 'home.html', {'jsondata':jsondata, 'parent_count':parent_count, 'children_count':children_count, 'medical_agency_count': medical_agency_count, 'locality_count': locality_count})
 
 def fault(request, msg):
     return render(request, 'fault.html', {'msg': msg})
@@ -30,7 +82,6 @@ def send_notifications(request):
             send_mail('Missed Immunization', msg_str, 'myowntestmail0@gmail.com', [medical_agency.user.email], fail_silently = True)
            
     return redirect('home')
-
 
 def populate(request):
     """ 

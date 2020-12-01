@@ -10,9 +10,17 @@
     <script>
         var jsonobject = JSON.parse('{{ jsondata | escapejs }}');
     </script>
-    <h3>Vaccination Status Analysis</h3>
+    <!-- <h3>Vaccination Status Analysis<a class="waves-effect waves-light btn modal-trigger" href="#chart"><i class="material-icons">insert_chart</i></a></h3> -->
 
-    <a class="waves-effect waves-light btn modal-trigger" href="#chart"><i class="material-icons">insert_chart</i></a>
+    <div class="row">
+        <div class="col s10">
+            <h3>Vaccination Status Analysis</h3>
+        </div>
+        <div class="col s2" style="padding-top: 2.5em;">
+            <a class="waves-effect waves-light btn modal-trigger" href="#chart"><i class="material-icons">insert_chart</i></a>
+        </div>
+    </div>
+    
 
     <div id="chart" class="modal modal-fixed-footer green lighten-5">
         {% include "medical/_charts.html" %}

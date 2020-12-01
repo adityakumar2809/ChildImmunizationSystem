@@ -138,7 +138,7 @@ def medical_agency_analysis_parent_wise(request, pk):
             vaccinated_percentage = 0
         label.append(f'{parent.user.first_name} {parent.user.last_name}')
         value.append(vaccinated_percentage)
-        parent_wise_vaccination_status.append({'parent_name':parent.pk, 'parent_name':f'{parent.user.first_name} {parent.user.last_name}', 'vaccination_done_count':vaccination_done_count, 'vaccination_missed_count':vaccination_missed_count, 'vaccinated_percentage':vaccinated_percentage})
+        parent_wise_vaccination_status.append({'parent_pk':parent.pk, 'parent_name':f'{parent.user.first_name} {parent.user.last_name}', 'vaccination_done_count':vaccination_done_count, 'vaccination_missed_count':vaccination_missed_count, 'vaccinated_percentage':vaccinated_percentage})
     data = { "label": label, "value": value}
     jsondata = json.dumps(data)
     return render(request, 'medical/medical-agency-analysis-parent-wise.html', {'parent_wise_vaccination_status':parent_wise_vaccination_status, 'jsondata':jsondata})
