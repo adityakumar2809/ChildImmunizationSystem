@@ -23,6 +23,7 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('fault/<str:msg>/', views.fault, name='fault'),
     path('send-notifications/', views.send_notifications, name='send_notifications'),
+    path('populate/', views.populate, name='populate'),
     path('account/', include('account.urls')),
     path('beneficiary/', include('beneficiary.urls')),
     path('medical/', include('medical.urls')),
