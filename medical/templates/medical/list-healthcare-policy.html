@@ -5,15 +5,35 @@
     Healthcare Policy List | Child Immunization System
 {% endblock page_title %}
 
+
 {% block content %}
-    <h1>Get Healthcare Policy List</h1>
+    <h3>Get Healthcare Policy List</h3>
+    <br>
     <form method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Get Details</button>
+        <div class="input-field">
+            {{ form.state }}
+            <label for="state">State of Residence</label>
+        </div>
+        <button class="waves-effect waves-light btn">Get Details</button>
     </form>
     <br><br>
+
     {% for healthcare_policy in healthcare_policy_list %}
-        <a href="{% url 'medical:detail_healthcare_policy' pk=healthcare_policy.pk %}">{{ healthcare_policy.title }} -- {{ healthcare_policy.description|truncatechars:30 }}</a>
+    <div class="row">
+        <div class="col s12 m12">
+          <div class="card teal">
+            <div class="card-content white-text">
+              <span class="card-title"><strong>{{ healthcare_policy.title }}</strong></span>
+              <p>{{ healthcare_policy.description|truncatechars:30 }}</p>
+            </div>
+            <div class="card-action">
+              <a href="{% url 'medical:detail_healthcare_policy' pk=healthcare_policy.pk %}"><u class="white-text">LEARN MORE...</u></a>
+            </div>
+          </div>
+        </div>
+    </div>
     {% endfor %}
+
+    
 {% endblock content %}

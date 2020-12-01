@@ -1,15 +1,32 @@
 {% extends "base.html" %}
 {% load static %}
+{% load widget_tweaks %}
 
 {% block page_title %}
     Add Healthcare Policy | Child Immunization System
 {% endblock page_title %}
 
+
 {% block content %}
-    <h1>Add Healthcare Policy</h1>
+    <h3>Add Healthcare Policy</h3>
     <form method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Add</button>
+        <div class="input-field">
+            {{ form.title }}
+            <label for="title">Policy Title</label>
+        </div>
+        <div class="input-field">
+            {{ form.description|add_class:'materialize-textarea' }}
+            <label for="description">Policy Description</label>
+        </div>
+        <div class="input-field">
+            {{ form.eligibility|add_class:'materialize-textarea' }}
+            <label for="eligibility">Eligibility Criteria</label>
+        </div>
+        <div class="input-field">
+            {{ form.process|add_class:'materialize-textarea' }}
+            <label for="process">Availing Process</label>
+        </div>
+        <button class="waves-effect waves-light btn">Add</button>
     </form>
 {% endblock content %}
