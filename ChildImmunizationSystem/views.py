@@ -159,6 +159,13 @@ def populate(request):
                 child_vcc.is_vaccinated = True
                 child_vcc.save()
     """
-    
+
+    """
+    # FIX EMAIL ADDRESSES
+    users = auth_models.User.objects.all()
+    for user in users:
+        user.email = f'{user.first_name.replace(" ","").lower()}@{user.last_name.lower()}.com'
+        user.save()
+    """
 
     return redirect('home') 
