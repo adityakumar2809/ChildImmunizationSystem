@@ -9,9 +9,35 @@
     <script>
         var jsonobject = JSON.parse('{{ jsondata | escapejs }}');
     </script>
-    {% include "medical/_charts.html" %}
-    <h1>Vaccination Status Analysis</h1>
-    {% for district_status in district_wise_vaccination_status %}
-        <p><a href="{% url 'medical:state_medical_officer_analysis_locality_wise' pk=district_status.district_pk %}">{{ district_status.district_name }}</a> -- {{ district_status.vaccination_done_count }} -- {{ district_status.vaccination_missed_count }} -- {{ district_status.vaccinated_percentage }}</p>
-    {% endfor %}
+    <h3>Vaccination Status Analysis</h3>
+
+    <a class="waves-effect waves-light btn modal-trigger" href="#chart"><i class="material-icons">insert_chart</i></a>
+
+    <div id="chart" class="modal modal-fixed-footer green lighten-5">
+        {% include "medical/_charts.html" %}
+    </div>
+
+
+    <table class="highlight centered responsive-table">
+        <thead>
+            <tr>
+                <th>S. No.</th>
+                <th>District Name</th>
+                <th>Successful Vaccination Count</th>
+                <th>Unsuccessful Vaccination Count</th>
+                <th>Vaccination Percentage</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for district_status in district_wise_vaccination_status %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td><a href="{% url 'medical:state_medical_officer_analysis_locality_wise' pk=district_status.district_pk %}"><strong>{{ district_status.district_name }}</strong></a></td>
+                    <td>{{ district_status.vaccination_done_count }}</td>
+                    <td>{{ district_status.vaccination_missed_count }}</td>
+                    <td>{{ district_status.vaccinated_percentage }} %</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock content %}

@@ -5,13 +5,40 @@
     Vaccination Status Analysis | Child Immunization System
 {% endblock page_title %}
 
+
 {% block content %}
     <script>
         var jsonobject = JSON.parse('{{ jsondata | escapejs }}');
     </script>
-    {% include "medical/_charts.html" %}
-    <h1>Vaccination Status Analysis</h1>
-    {% for parent_status in parent_wise_vaccination_status %}
-        <p>{{ parent_status.parent_name }} -- {{ parent_status.vaccination_done_count }} -- {{ parent_status.vaccination_missed_count }} -- {{ parent_status.vaccinated_percentage }}</p>
-    {% endfor %}
+    <h3>Vaccination Status Analysis</h3>
+
+    <a class="waves-effect waves-light btn modal-trigger" href="#chart"><i class="material-icons">insert_chart</i></a>
+
+    <div id="chart" class="modal modal-fixed-footer green lighten-5">
+        {% include "medical/_charts.html" %}
+    </div>
+
+
+    <table class="highlight centered responsive-table">
+        <thead>
+            <tr>
+                <th>S. No.</th>
+                <th>Parent Name</th>
+                <th>Successful Vaccination Count</th>
+                <th>Unsuccessful Vaccination Count</th>
+                <th>Vaccination Percentage</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for parent_status in parent_wise_vaccination_status %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td><strong>{{ parent_status.parent_name }}</strong></td>
+                    <td>{{ parent_status.vaccination_done_count }}</td>
+                    <td>{{ parent_status.vaccination_missed_count }}</td>
+                    <td>{{ parent_status.vaccinated_percentage }} %</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock content %}
