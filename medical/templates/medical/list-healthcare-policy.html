@@ -25,7 +25,8 @@
           <div class="card teal">
             <div class="card-content white-text">
               <span class="card-title"><strong>{{ healthcare_policy.title }}</strong></span>
-              <p>{{ healthcare_policy.description|truncatechars:30 }}</p>
+              <br>
+              <p style="text-align: justify;">{{ healthcare_policy.description|truncatechars:350 }}</p>
             </div>
             <div class="card-action">
               <a href="{% url 'medical:detail_healthcare_policy' pk=healthcare_policy.pk %}"><u class="white-text">LEARN MORE...</u></a>
