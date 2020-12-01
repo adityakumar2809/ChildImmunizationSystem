@@ -108,7 +108,7 @@ def medical_agency_analysis_locality_wise(request):
                 vaccination_done_count += ben_models.ChildVaccine.objects.all().filter(child__exact=child, scheduled_date__lte=datetime.date.today(), is_vaccinated__exact=True).count()
                 vaccination_missed_count += ben_models.ChildVaccine.objects.all().filter(child__exact=child, scheduled_date__lte=datetime.date.today(), is_vaccinated__exact=False).count()
         if (vaccination_done_count + vaccination_missed_count) > 0:
-            vaccinated_percentage = (vaccination_done_count/(vaccination_done_count + vaccination_missed_count))*100
+            vaccinated_percentage = round((vaccination_done_count/(vaccination_done_count + vaccination_missed_count))*100, 2)
         else:
             vaccinated_percentage = 0
         label.append(locality.name)
@@ -133,7 +133,7 @@ def medical_agency_analysis_parent_wise(request, pk):
             vaccination_done_count += ben_models.ChildVaccine.objects.all().filter(child__exact=child, scheduled_date__lte=datetime.date.today(), is_vaccinated__exact=True).count()
             vaccination_missed_count += ben_models.ChildVaccine.objects.all().filter(child__exact=child, scheduled_date__lte=datetime.date.today(), is_vaccinated__exact=False).count()
         if (vaccination_done_count + vaccination_missed_count) > 0:
-            vaccinated_percentage = (vaccination_done_count/(vaccination_done_count + vaccination_missed_count))*100
+            vaccinated_percentage = round((vaccination_done_count/(vaccination_done_count + vaccination_missed_count))*100, 2)
         else:
             vaccinated_percentage = 0
         label.append(f'{parent.user.first_name} {parent.user.last_name}')
@@ -161,7 +161,7 @@ def district_medical_officer_analysis_locality_wise(request):
                 vaccination_done_count += ben_models.ChildVaccine.objects.all().filter(child__exact=child, scheduled_date__lte=datetime.date.today(), is_vaccinated__exact=True).count()
                 vaccination_missed_count += ben_models.ChildVaccine.objects.all().filter(child__exact=child, scheduled_date__lte=datetime.date.today(), is_vaccinated__exact=False).count()
         if (vaccination_done_count + vaccination_missed_count) > 0:
-            vaccinated_percentage = (vaccination_done_count/(vaccination_done_count + vaccination_missed_count))*100
+            vaccinated_percentage = round((vaccination_done_count/(vaccination_done_count + vaccination_missed_count))*100, 2)
         else:
             vaccinated_percentage = 0
         label.append(locality.name)
@@ -186,7 +186,7 @@ def district_medical_officer_analysis_parent_wise(request, pk):
             vaccination_done_count += ben_models.ChildVaccine.objects.all().filter(child__exact=child, scheduled_date__lte=datetime.date.today(), is_vaccinated__exact=True).count()
             vaccination_missed_count += ben_models.ChildVaccine.objects.all().filter(child__exact=child, scheduled_date__lte=datetime.date.today(), is_vaccinated__exact=False).count()
         if (vaccination_done_count + vaccination_missed_count) > 0:
-            vaccinated_percentage = (vaccination_done_count/(vaccination_done_count + vaccination_missed_count))*100
+            vaccinated_percentage = round((vaccination_done_count/(vaccination_done_count + vaccination_missed_count))*100, 2)
         else:
             vaccinated_percentage = 0
         label.append(f'{parent.user.first_name} {parent.user.last_name}')
@@ -216,7 +216,7 @@ def state_medical_officer_analysis_district_wise(request):
                     vaccination_done_count += ben_models.ChildVaccine.objects.all().filter(child__exact=child, scheduled_date__lte=datetime.date.today(), is_vaccinated__exact=True).count()
                     vaccination_missed_count += ben_models.ChildVaccine.objects.all().filter(child__exact=child, scheduled_date__lte=datetime.date.today(), is_vaccinated__exact=False).count()
             if (vaccination_done_count + vaccination_missed_count) > 0:
-                vaccinated_percentage = (vaccination_done_count/(vaccination_done_count + vaccination_missed_count))*100
+                vaccinated_percentage = round((vaccination_done_count/(vaccination_done_count + vaccination_missed_count))*100, 2)
             else:
                 vaccinated_percentage = 0
         label.append(district.name)
@@ -243,7 +243,7 @@ def state_medical_officer_analysis_locality_wise(request, pk):
                 vaccination_done_count += ben_models.ChildVaccine.objects.all().filter(child__exact=child, scheduled_date__lte=datetime.date.today(), is_vaccinated__exact=True).count()
                 vaccination_missed_count += ben_models.ChildVaccine.objects.all().filter(child__exact=child, scheduled_date__lte=datetime.date.today(), is_vaccinated__exact=False).count()
         if (vaccination_done_count + vaccination_missed_count) > 0:
-            vaccinated_percentage = (vaccination_done_count/(vaccination_done_count + vaccination_missed_count))*100
+            vaccinated_percentage = round((vaccination_done_count/(vaccination_done_count + vaccination_missed_count))*100, 2)
         else:
             vaccinated_percentage = 0
         label.append(locality.name)
@@ -268,7 +268,7 @@ def state_medical_officer_analysis_parent_wise(request, pk):
             vaccination_done_count += ben_models.ChildVaccine.objects.all().filter(child__exact=child, scheduled_date__lte=datetime.date.today(), is_vaccinated__exact=True).count()
             vaccination_missed_count += ben_models.ChildVaccine.objects.all().filter(child__exact=child, scheduled_date__lte=datetime.date.today(), is_vaccinated__exact=False).count()
         if (vaccination_done_count + vaccination_missed_count) > 0:
-            vaccinated_percentage = (vaccination_done_count/(vaccination_done_count + vaccination_missed_count))*100
+            vaccinated_percentage = round((vaccination_done_count/(vaccination_done_count + vaccination_missed_count))*100, 2)
         else:
             vaccinated_percentage = 0
         label.append(f'{parent.user.first_name} {parent.user.last_name}')
