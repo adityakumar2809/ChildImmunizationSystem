@@ -19,7 +19,7 @@ class GetStateForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(GetStateForm, self).__init__(*args, **kwargs)
 
-        STATE_CHOICES = []
+        STATE_CHOICES = [(None, '---Select---')]
 
         state_list = loc_models.State.objects.all()
         for state in state_list:
