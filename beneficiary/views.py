@@ -52,7 +52,7 @@ def create_parent(request):
             child_last_name = form.cleaned_data['child_last_name']
             child_dob = form.cleaned_data['child_dob']
 
-            username = f'par-{parent_first_name.lower()}-{random.randint(111111,999999)}'
+            username = f'par-{parent_first_name.lower()}-{parent_last_name.lower()}-{random.randint(111111,999999)}'
             password = ''.join((random.choice(string.ascii_letters + string.digits) for i in range(8)))
             user = auth_models.User.objects.create_user(username=username, password=password)
             user.first_name = parent_first_name

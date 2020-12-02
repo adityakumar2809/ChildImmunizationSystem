@@ -2,62 +2,87 @@
 {% load static %}
 
 {% block page_title %}
-    Home | Child Immunization System
+Home | Child Immunization System
 {% endblock page_title %}
 
-{% block content %}
-    <h1>Home</h1>
-    <script>
-        var jsonobject = JSON.parse('{{ jsondata | escapejs }}');
-    </script>
-    
-    
-    {% include "charts/_bar_charts.html" %}
-    {% include "charts/_pie_total_charts.html" %}
-    {% include "charts/_pie_vcc_charts.html" %}
-    {% include "charts/_line_charts.html" %}
+{% block head %}
+	<style>
+		.card-heading {
+			margin: 0;
+		}
+		.card-content {
+			padding: 0.5em !important;
+		}
+	</style>
+{% endblock head %}
 
-    <div class="row">
-        <div class="col s12 m6">
-          <div class="card blue-grey darken-1">
-            <div class="card-content white-text">
-              <h3 class="">{{ children_count }}</h3>
-              <h5>Children Registered</h5>
-            </div>
-          </div>
-        </div>
-    </div>
-    
-    <div class="row">
-        <div class="col s12 m6">
-          <div class="card blue-grey darken-1">
-            <div class="card-content white-text">
-              <h3 class="">{{ parent_count }}</h3>
-              <h5>Active Parents</h5>
-            </div>
-          </div>
-        </div>
-    </div>
-    
-    <div class="row">
-        <div class="col s12 m6">
-          <div class="card blue-grey darken-1">
-            <div class="card-content white-text">
-              <h3 class="">{{ medical_agency_count }}</h3>
-              <h5>Medical Agencies Partnered</h5>
-            </div>
-          </div>
-        </div>
-    </div>
-    
-    <div class="row">
-        <div class="col s12 m6">
-          <div class="card blue-grey darken-1">
-            <div class="card-content white-text">
-              <h3 class="">{{ locality_count }}</h3>
-              <h5>Localities Covered</h5>
-            </div>
-          </div>
-        </div>
-    </div>
+{% block content %}
+	<script>
+		var jsonobject = JSON.parse('{{ jsondata | escapejs }}');
+	</script>
+
+	<br><br>
+	<div class="row">
+		<div class="col s8">
+			{% include "charts/_line_charts.html" %}
+		</div>
+		<div class="col s4">
+			{% include "charts/_pie_vcc_charts.html" %}
+			{% include "charts/_pie_total_charts.html" %}
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col s8">
+			{% include "charts/_bar_charts.html" %}
+		</div>
+		<div class="col s4">
+			<br><br>
+			<div class="row">
+				<div class="col s12">
+					<div class="card cyan darken-2">
+						<div class="card-content white-text">
+							<h4 class="card-heading">{{ children_count }}</h4>
+							<h6>Children Registered</h6>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col s12">
+					<div class="card cyan darken-2">
+						<div class="card-content white-text">
+							<h4 class="card-heading">{{ parent_count }}</h4>
+							<h6>Active Parents</h6>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col s12">
+					<div class="card cyan darken-2">
+						<div class="card-content white-text">
+							<h4 class="card-heading">{{ medical_agency_count }}</h4>
+							<h6>Medical Agencies Partnered</h6>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col s12">
+					<div class="card cyan darken-2">
+						<div class="card-content white-text">
+							<h4 class="card-heading">{{ locality_count }}</h4>
+							<h6>Localities Covered</h6>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 {% endblock content %}
