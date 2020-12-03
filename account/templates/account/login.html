@@ -18,6 +18,13 @@
             {{ form.password }}
             <label for="password">Password</label>
         </div>
+        {% if form.non_field_errors %}
+            <ul class='red-text'>
+                {% for error in form.non_field_errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
         <button class="waves-effect waves-light btn">Log IN</button>
     </form>
 {% endblock content %}
