@@ -51,12 +51,43 @@
             <li><a href="{% url 'beneficiary:add_child_to_parent' %}" class="teal-text text-lighten-5">Existing parent</a></li>
         </ul>
         
+        <ul class="sidenav cyan darken-4" id="mobile-nav">
+            {% if user.is_authenticated %}
+                <li><a href="#!"><strong class="white-text">Hello, {{ user.first_name }} {{ user.last_name }}</strong></a></li>
+                {% if user.pk in parent_users %}
+                    <li><a href="{% url 'beneficiary:list_children' pk=user.pk %}" class="teal-text text-lighten-5">My Children</a></li>
+                    <li><a href="{% url 'beneficiary:detail_medical' pk=user.pk %}" class="teal-text text-lighten-5">Get Medical Help</a></li>
+                {% endif %}
+                {% if user.pk in medical_agency_users %}
+                    <li><a class="dropdown-trigger" href="#!" data-target="register_child_dropdown">Register Child<i class="material-icons right">arrow_drop_down</i></a></li>
+                    <li><a href="{% url 'medical:list_children' %}" class="teal-text text-lighten-5">View Parent Details</a></li>
+                    <li><a href="{% url 'medical:medical_agency_analysis_locality_wise' %}" class="teal-text text-lighten-5">Locality Wise Analysis</a></li>
+                {% endif %}
+                {% if user.pk in medical_helper_users %}
+                    <li><a href="{% url 'medical:list_children_medical_helper' %}" class="teal-text text-lighten-5">View Parent Details</a></li>
+                {% endif %}
+                {% if user.pk in district_medical_officer_users %}
+                    <li><a href="{% url 'medical:district_medical_officer_analysis_locality_wise' %}" class="teal-text text-lighten-5">Locality Wise Analysis</a></li>
+                {% endif %}
+                {% if user.pk in state_medical_officer_users %}
+                    <li><a href="{% url 'medical:state_medical_officer_analysis_district_wise' %}" class="teal-text text-lighten-5">District Wise Analysis</a></li>
+                    <li><a href="{% url 'medical:add_healthcare_policy' %}" class="teal-text text-lighten-5">Add Healthcare Policy</a></li>
+                {% endif %}
+                <li><a href="{% url 'medical:list_healthcare_policy' %}" class="teal-text text-lighten-5">Healthcare Policies</a></li>
+                <li><a href="{% url 'account:logout' %}" class="teal-text text-lighten-5">Logout</a></li>
+            {% else %}
+                <li><a href="{% url 'medical:list_healthcare_policy' %}" class="teal-text text-lighten-5">Healthcare Policies</a></li>
+                <li style="border-left: #004d40 5px solid;"><a href="{% url 'account:login' %}" class="teal-text text-lighten-5">Login</a></li>
+            {% endif %}
+        </ul>
+
         <div class="navbar-fixed">
             <nav>
                 <div class="nav-wrapper cyan darken-4">
                     <a href="{% url 'home' %}" class="left brand-logo"><img src="{% static 'images/logo.png' %}" width="50" height="auto" style="margin-left: 20px;"></a>
-                    <a href="{% url 'home' %}" class="brand-logo" style="margin-left: 80px;">&nbsp;Child Immunization System</a>
-                    <ul class="right">
+                    <a href="{% url 'home' %}" class="brand-logo hide-on-med-and-down" style="margin-left: 80px;">&nbsp;Child Immunization System</a>
+                    <a href="#" data-target="mobile-nav" class="right sidenav-trigger"><i class="material-icons">menu</i></a>
+                    <ul class="right hide-on-med-and-down">
                         {% if user.is_authenticated %}
                             <li><a href="#!"><strong>Hello, {{ user.first_name }} {{ user.last_name }}</strong></a></li>
                             {% if user.pk in parent_users %}
@@ -116,6 +147,10 @@
 
             $(document).ready(function () {
                 $(".dropdown-trigger").dropdown();            
+            });
+
+            $(document).ready(function(){
+                $('.sidenav').sidenav();
             });
         </script>
     </body>
