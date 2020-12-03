@@ -222,5 +222,9 @@ def populate(request):
         user.save()
     """
 
+    """
     username = 'par-amit-kumar-567774'
     return redirect('success', msg=f'A new child is registered successfully to parent with username \"{username}\"')
+    """
+
+    return redirect('home')
