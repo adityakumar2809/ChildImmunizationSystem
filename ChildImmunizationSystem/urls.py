@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
     path('fault/<str:msg>/', views.fault, name='fault'),
+    path('success/<str:msg>/', views.success, name='success'),
     path('send-notifications/', views.send_notifications, name='send_notifications'),
     path('populate/', views.populate, name='populate'),
     path('account/', include('account.urls')),

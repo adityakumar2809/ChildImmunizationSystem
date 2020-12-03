@@ -70,7 +70,7 @@ def create_parent(request):
                     for ntf_days_offset in notification_days_offset:
                         models.Notification.objects.create(child_vaccine=child_vaccine, scheduled_date=child_vaccine.scheduled_date - datetime.timedelta(days=ntf_days_offset))
 
-                return redirect('home')
+                return redirect('success', msg=f'A new parent registered successfully with username \"{username}\"')
             else:
                 return redirect('fault', msg='Invalid Request')
 
@@ -103,7 +103,7 @@ def add_child_to_parent(request):
                     child_vaccine = models.ChildVaccine.objects.create(child=child, vaccine=vcc, scheduled_date=child_dob + datetime.timedelta(days=vcc.days_offset))
                     for ntf_days_offset in notification_days_offset:
                         models.Notification.objects.create(child_vaccine=child_vaccine, scheduled_date=child_vaccine.scheduled_date - datetime.timedelta(days=ntf_days_offset))
-                return redirect('home')
+                return redirect('success', msg=f'A new child is registered successfully to parent with username \"{parent.user.username}\"')
             else:
                 return redirect('fault', msg='The given parent does not reside in your area of operation')
         else:

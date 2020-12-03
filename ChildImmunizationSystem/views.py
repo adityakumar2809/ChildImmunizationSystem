@@ -67,6 +67,9 @@ def home(request):
 def fault(request, msg):
     return render(request, 'fault.html', {'msg': msg})
 
+def success(request, msg):
+    return render(request, 'success.html', {'msg': msg})
+
 def send_notifications(request):
     notifications = ben_models.Notification.objects.all().filter(is_sent__exact=False, scheduled_date__exact=datetime.date.today())
     for notification in notifications:
