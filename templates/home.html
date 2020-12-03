@@ -21,23 +21,25 @@ Home | Child Immunization System
 		var jsonobject = JSON.parse('{{ jsondata | escapejs }}');
 	</script>
 
-	<br><br>
-	<div class="row">
-		<div class="col s8">
-			{% include "charts/_line_charts.html" %}
-		</div>
-		<div class="col s4">
-			{% include "charts/_pie_vcc_charts.html" %}
-			{% include "charts/_pie_total_charts.html" %}
-		</div>
-	</div>
+	<br>
 
 	<div class="row">
-		<div class="col s8">
-			{% include "charts/_bar_charts.html" %}
+		<div class="col s9">
+			<center>
+				<img src="{% static 'images/home-image-1.png' %}" width="80%" height="auto">
+			</center>
+			<br><br><br>
+			<div class="row">
+				<div class="col s6">
+					{% include "charts/_pie_total_charts.html" %}
+				</div>
+				<div class="col s6">
+					{% include "charts/_pie_vcc_charts.html" %}
+				</div>
+			</div>
 		</div>
-		<div class="col s4">
-			<br><br>
+		<div class="col s3">
+			<br><br><br>
 			<div class="row">
 				<div class="col s12">
 					<div class="card cyan darken-2">
@@ -81,6 +83,28 @@ Home | Child Immunization System
 					</div>
 				</div>
 			</div>
+		</div>
+	</div>
+
+
+	<br><br><br><br><br><br>
+	<div class="row">
+		<div class="col l8 s12">
+			{% include "charts/_line_charts.html" %}
+		</div>
+		<div class="col l4 s12">
+			<br><br>
+			<img src="{% static 'images/home-image-2.png' %}">
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col l4 s12">
+			<br><br><br>
+			<img src="{% static 'images/home-image-3.png' %}" width="100%" height="auto">
+		</div>
+		<div class="col l8 s12">
+			{% include "charts/_bar_charts.html" %}
 		</div>
 	</div>
 
