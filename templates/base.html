@@ -10,6 +10,8 @@
             {% endblock page_title %}
         </title>
 
+        <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}"/>
+
         <!-- Compiled and minified jQuery -->
         <!-- <script src="https://code.jquery.com/jquery-3.5.0.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script> -->
         <script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
@@ -47,12 +49,13 @@
         <ul id="register_child_dropdown" class="dropdown-content cyan darken-3">
             <li><a href="{% url 'beneficiary:create_parent' %}" class="teal-text text-lighten-5">New Parent</a></li>
             <li><a href="{% url 'beneficiary:add_child_to_parent' %}" class="teal-text text-lighten-5">Existing parent</a></li>
-          </ul>
+        </ul>
         
         <div class="navbar-fixed">
             <nav>
                 <div class="nav-wrapper cyan darken-4">
-                    <a href="{% url 'home' %}" class="left brand-logo">&nbsp;Child Immunization System</a>
+                    <a href="{% url 'home' %}" class="left brand-logo"><img src="{% static 'images/logo.png' %}" width="50" height="auto" style="margin-left: 20px;"></a>
+                    <a href="{% url 'home' %}" class="brand-logo" style="margin-left: 80px;">&nbsp;Child Immunization System</a>
                     <ul class="right">
                         {% if user.is_authenticated %}
                             <li><a href="#!"><strong>Hello, {{ user.first_name }} {{ user.last_name }}</strong></a></li>
