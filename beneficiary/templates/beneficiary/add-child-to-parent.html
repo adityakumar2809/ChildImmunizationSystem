@@ -3,11 +3,13 @@
 {% load widget_tweaks %}
 
 {% block page_title %}
-    Add Child to Parent | Child Immunization System
+    Register Child to Parent | Child Immunization System
 {% endblock page_title %}
 
 {% block content %}
-    <h3>Add Child to Parent</h3>
+    <center>
+        <h3><strong>Register Child to Parent</strong></h3>
+    </center>
     <form method="POST">
         {% csrf_token %}
         <div class="input-field">

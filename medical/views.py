@@ -294,7 +294,7 @@ def add_healthcare_policy(request):
                     for parent in locality.parents.all():
                         beneficiary_email_list.append(f'{parent.user.email}')
             send_mail('New Healthcare Policy Launched', f'A new healthcare policy is implemented by your state government. Kindly have a look. Thank You.', 'myowntestmail0@gmail.com', beneficiary_email_list, fail_silently = True)
-            return redirect('home')
+            return redirect('success', msg='Healthcare Policy Added Successfully')
         else:
             return redirect('fault', msg='Invalid Request')
     else:

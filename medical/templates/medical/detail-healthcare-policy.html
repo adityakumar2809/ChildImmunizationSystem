@@ -2,43 +2,45 @@
 {% load static %}
 
 {% block page_title %}
-    {{ healthcare_policy.title }} | Child Immunization System
+{{ healthcare_policy.title }} | Child Immunization System
 {% endblock page_title %}
 
 {% block content %}
-    <h1>{{ healthcare_policy.title }}</h1>
+	<center>
+		<h3><strong>{{ healthcare_policy.title }}</strong></h3>
+	</center>
 
-    <div class="row">
-        <div class="col s12 m12">
-          <div class="card teal">
-            <div class="card-content white-text">
-              <span class="card-title"><strong>Description</strong></span>
-              <p style="text-align: justify;">{{ healthcare_policy.description|linebreaksbr }}</p>
-            </div>
-          </div>
-        </div>
-    </div>
+	<div class="row">
+		<div class="col s12 m12">
+			<div class="card teal">
+				<div class="card-content white-text">
+					<span class="card-title"><strong>Description</strong></span>
+					<p style="text-align: justify;">{{ healthcare_policy.description|linebreaksbr }}</p>
+				</div>
+			</div>
+		</div>
+	</div>
 
-    <div class="row">
-        <div class="col s12 m12">
-          <div class="card teal">
-            <div class="card-content white-text">
-              <span class="card-title"><strong>Eligibility Criteria</strong></span>
-              <p style="text-align: justify;">{{ healthcare_policy.eligibility|linebreaksbr }}</p>
-            </div>
-          </div>
-        </div>
-    </div>
+	<div class="row">
+		<div class="col s12 m12">
+			<div class="card teal">
+				<div class="card-content white-text">
+					<span class="card-title"><strong>Eligibility Criteria</strong></span>
+					<p style="text-align: justify;">{{ healthcare_policy.eligibility|linebreaksbr }}</p>
+				</div>
+			</div>
+		</div>
+	</div>
 
-    <div class="row">
-        <div class="col s12 m12">
-          <div class="card teal">
-            <div class="card-content white-text">
-              <span class="card-title"><strong>Availing Process</strong></span>
-              <p style="text-align: justify;">{{ healthcare_policy.process|linebreaksbr }}</p>
-            </div>
-          </div>
-        </div>
-    </div>
+	<div class="row">
+		<div class="col s12 m12">
+			<div class="card teal">
+				<div class="card-content white-text">
+					<span class="card-title"><strong>Availing Process</strong></span>
+					<p style="text-align: justify;">{{ healthcare_policy.process|linebreaksbr }}</p>
+				</div>
+			</div>
+		</div>
+	</div>
 
 {% endblock content %}

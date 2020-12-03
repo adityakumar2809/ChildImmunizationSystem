@@ -32,6 +32,12 @@
                     <td><a href="{% url 'medical:detail_children_medical_helper' pk=child.pk %}">{{ child.first_name }}</a></td>
                     <td><a href="{% url 'medical:detail_children_medical_helper' pk=child.pk %}">{{ child.last_name }}</a></td>
                 </tr>
+            {% empty %}
+                <tr>
+                    <td><i class="material-icons">remove</i></td>
+                    <td><i class="material-icons">remove</i></td>
+                    <td><i class="material-icons">remove</i></td>
+                </tr>
             {% endfor %}
         </tbody>
     </table>
