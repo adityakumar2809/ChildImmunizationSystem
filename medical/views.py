@@ -288,11 +288,6 @@ def add_healthcare_policy(request):
             healthcare_policy.state = models.StateMedicalOfficer.objects.get(user__pk__exact=request.user.pk).state
             healthcare_policy.save()
 
-            # CODE FOR EVALUATIVE PURPOSE BEGINS
-            send_mail('New Healthcare Policy Launched', f'A new healthcare policy is implemented by your state government. Kindly have a look. Thank You.', 'myowntestmail0@gmail.com', [ben_models.Parent.objects.get(user__first_name__iexact='anikate').user.email, 'adityakumar2809@gmail.com'], fail_silently = True)
-            return redirect('success', msg='Healthcare Policy Added Successfully')
-            # CODE FOR EVALUATIVE PURPOSE ENDS
-
             beneficiary_email_list = []
             for district in models.StateMedicalOfficer.objects.get(user__pk__exact=request.user.pk).state.districts.all():
                 for locality in district.localities.all():
